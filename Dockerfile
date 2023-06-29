@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ARG S6_OVERLAY_VERSION=3.1.5.0
+
 ENV USERNAME samba
 ENV PASSWORD password
 ENV UID 1000
