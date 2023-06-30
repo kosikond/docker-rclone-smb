@@ -7,11 +7,12 @@ Ever wanted to share your Rclone remotes over SMB? As `rclone mount` exposes sim
 TODO and Ideas:
 
 - [x] setup initial Github Actions 
-- [] s6-overlay structure for v3
-- [] implement Mumie-hub/docker-services/rclone-mount service
-- [] investigate if WSDD (WebServices Discovery Daemon) has any benefit
-- [] It's 2023, test it with Podman.
-- [] publish to Docker Hub
+- [ ] s6-overlay structure for v3
+- [ ] implement Mumie-hub/docker-services/rclone-mount service
+- [ ] Proper multi-arch support for x86-64 and ARM64
+- [ ] investigate if WSDD (WebServices Discovery Daemon) has any benefit
+- [ ] It's 2023, test it with Podman.
+- [ ] publish to Docker Hub
 
 
 # MIT License
