@@ -7,15 +7,16 @@ ENV PASSWORD password
 ENV UID 1000
 ENV GID 1000
 
-RUN apk add --no-cache samba-server samba-common-tools openssl
+RUN apk add --no-cache samba-server samba-common-tools openssl wsdd
 
-ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-amd64.tar.gz /tmp/
-RUN tar -xzf /tmp/s6-overlay-amd64.tar.gz -C /
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
 
-COPY s6/config.init /etc/cont-init.d/00-config
-COPY s6/smbd.run /etc/services.d/smbd/run
-COPY s6/nmbd.run /etc/services.d/nmbd/run
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
 
-EXPOSE 137/udp 138/udp 139/tcp 445/tcp
+COPY /rootfs/ /
+
+EXPOSE 137/udp 138/udp 139/tcp 445/tcp 3702/udp 5357/tcp
 
 ENTRYPOINT ["/init"]
