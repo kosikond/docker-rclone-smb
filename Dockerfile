@@ -7,7 +7,9 @@ ENV PASSWORD password
 ENV UID 1000
 ENV GID 1000
 
-RUN apk add --no-cache samba-server samba-common-tools openssl wsdd rclone
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" | \
+    tee -a /etc/apk/repositories && \
+    apk add --no-cache samba-server samba-common-tools openssl wsdd rclone
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
 RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
