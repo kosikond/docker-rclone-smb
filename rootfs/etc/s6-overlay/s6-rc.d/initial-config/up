@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv sh
 
+echo $DEBUG
+echo $GID
+
 if [ "$DEBUG" = true ]; then
     echo -e "[DEBUG] command: addgroup -g $GID samba > /dev/null 2&>1"
 fi
