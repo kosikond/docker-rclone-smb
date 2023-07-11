@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv sh
+#!/command/with-contenv sh
 
 #set -x
 
@@ -16,13 +16,13 @@ checkRclone(){
 
 #s6-echo "shutdown rclone mount[DEBUG]"
 if checkRclone; then
-    s6-svc -d ${SERVICE_DIR}/${SERVICE}
+    /command/s6-svc -d ${SERVICE_DIR}/${SERVICE}
 #    s6-svc -t ${SERVICE_DIR}/${SERVICE}
     tempPID="$(pgrep rclon[e])"
     kill ${tempPID}
 else
     echo -e "${PREFFIX} ${Red}rclone process not present, restarting container[ERROR]${Color_Off}"
-    s6-svscanctl -t /var/run/s6/services
+    /command/s6-svscanctl -t /var/run/s6/services
 fi
 
 echo -e "${PREFFIX} ${Yellow}waiting for rclone shutdown${Color_Off}"
