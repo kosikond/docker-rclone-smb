@@ -1,6 +1,9 @@
-FROM alpine:latest
+# syntax=docker/dockerfile:1
+
+FROM --platform=$BUILDPLATFORM alpine:latest AS builder
 
 ARG S6_OVERLAY_VERSION=3.1.5.0
+ARG TARGETPLATFORM
 
 LABEL org.opencontainers.image.authors="1444670+kosikond@users.noreply.github.com"
 
@@ -9,15 +12,26 @@ ENV PASSWORD password
 ENV UID 1000
 ENV GID 1000
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" | \
-    tee -a /etc/apk/repositories && \
-    apk add --no-cache samba-server samba-common-tools openssl wsdd rclone
+RUN apk add --no-cache curl && \
+    case "${TARGETPLATFORM}" in \
+    "linux/amd64") S6_ARCH="x86_64" ;; \
+    "linux/arm64") S6_ARCH="aarch64" ;; \
+    *) echo "Unsupported platform ${TARGETPLATFORM}"; exit 1 ;; \
+    esac && \
+    curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" -o /tmp/s6-overlay.tar.xz
+
+FROM alpine:latest
+
+COPY --from=builder /tmp/s6-overlay.tar.xz /tmp
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
-RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && rm -f /tmp/s6-overlay-noarch.tar.xz
 
-ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
-RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" | \
+    tee -a /etc/apk/repositories && \
+    apk add --no-cache samba-server samba-common-tools openssl wsdd rclone && \
+    tar -C / -Jxpf /tmp/s6-overlay.tar.xz && \
+    rm -f /tmp/s6-overlay.tar.xz
 
 COPY /rootfs/ /
 
