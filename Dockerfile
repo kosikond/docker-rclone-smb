@@ -14,7 +14,7 @@ ENV GID 1000
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" | \
     tee -a /etc/apk/repositories && \
-    apk update && add --no-cache curl samba-server samba-common-tools openssl wsdd rclone && \
+    apk update && apk add --no-cache curl samba-server samba-common-tools openssl wsdd rclone && \
     case "${TARGETPLATFORM}" in \
     "linux/amd64") S6_ARCH="x86_64" ;; \
     "linux/arm64") S6_ARCH="aarch64" ;; \
