@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM --platform=$BUILDPLATFORM alpine:latest
+FROM --platform=$TARGETPLATFORM alpine:latest
 
 ARG S6_OVERLAY_VERSION=3.1.5.0
 ARG TARGETPLATFORM
 
 LABEL org.opencontainers.image.authors="1444670+kosikond@users.noreply.github.com"
+LABEL org.opencontainers.image.description=""
 
 ENV USERNAME samba
 ENV PASSWORD password
