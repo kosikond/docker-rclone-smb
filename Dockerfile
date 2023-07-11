@@ -6,7 +6,7 @@ ARG S6_OVERLAY_VERSION=3.1.5.0
 ARG TARGETPLATFORM
 
 LABEL org.opencontainers.image.authors="1444670+kosikond@users.noreply.github.com"
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.description="Expose Rclone mount via SMB"
 
 ENV USERNAME samba
 ENV PASSWORD password
