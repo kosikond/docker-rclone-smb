@@ -4,15 +4,15 @@
 
 Ever wanted to share your Rclone remotes over SMB? As `rclone mount` exposes simple mountoint only via FUSE, it's hard to get access to files from MacOS or Windows. Why not mount it via one s6-overlay service and expose via `smbd` then? What could _go wrong_?
 
-TODO and Ideas:
 
-- [x] setup initial Github Actions 
-- [ ] s6-overlay structure for v3
-- [ ] implement Mumie-hub/docker-services/rclone-mount service
-- [ ] Proper multi-arch support for x86-64 and ARM64
-- [ ] investigate if WSDD (WebServices Discovery Daemon) has any benefit
-- [ ] It's 2023, test it with Podman.
-- [ ] publish to Docker Hub
+# TODO:
+
+- [x] Github Actions with 
+- [ ] implement [https://github.com/Mumie-hub/docker-services/tree/master/rclone-mount](Mumie-hub's rclone-mount) service and update it to s6-overlay v3
+- [X] Multi-arch support for x86-64 and ARM64
+- [ ] Add WSDD (Web Services Discovery Daemon)
+- [ ] Test with Podman
+- [ ] Publish to Docker Hub
 
 
 # MIT License
